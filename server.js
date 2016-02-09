@@ -48,6 +48,20 @@ app.post('/todos', function (req, res) {
 	res.json(body);
 });
 
+// delete a todo item
+app.delete('/todos/:id', function (req, res) {
+	var todoId = parseInt(req.params.id,10);
+	var matchedTodo = _.findWhere(todos,{id: todoId});
+	
+	if (matchedTodo) {
+		// remove the item from the todo list
+		todos = _.without(todos, matchedTodo);
+		res.json(matchedTodo);
+	} else {
+		res.status(404).send();
+	}
+});
+
 app.listen(PORT, function () {
 	console.log('Express listening on port ' + PORT + '!');
 });
